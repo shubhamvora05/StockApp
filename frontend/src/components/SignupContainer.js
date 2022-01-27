@@ -1,7 +1,11 @@
 import React,{ useState } from 'react'
-import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
-//import { isLoggedIn } from '../variables';
-const axios = require('axios');
+import { Form ,Button} from 'react-bootstrap';
+import fire from '../fire.js';
+import '../css/loginsingup.css';
+import { Navigate } from "react-router-dom";
+//const axios = require('axios');
+
+
 
 
 function SignupContainer(props) {
@@ -15,62 +19,69 @@ function SignupContainer(props) {
     
    function onSubmit(e) {
       e.preventDefault()
+      
+      try{
+      fire.auth().createUserWithEmailAndPassword(email, password);
+      console.log("hello");
+      console.log("AFTER");
+    }catch(error) {
+        setMessage(error.message);
+      }     
 
-      const userObject = {
+      // const userObject = {
          
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword
+      //     email: email,
+      //     password: password,
+      //     confirmPassword: confirmPassword
           
-      };
+      // };
 
-      axios.post('http://localhost:5000/signup', userObject)
-          .then((res) => {
-            if(res.data.message === "singup successful!"){
-              window.isLoggedIn = true;
-            }
-            setMessage(res.data.message)
-          }).catch((err) => {
+      // axios.post('http://localhost:5000/signup', userObject)
+      //     .then((res) => {
+      //       if(res.data.message === "singup successful!"){
+      //         window.isLoggedIn = true;
+      //       }
+      //       setMessage(res.data.message)
+      //     }).catch((err) => {
             
-            setMessage("Please, try again after a while.")
-          });
+      //       setMessage("Please, try again after a while.")
+      //     });
   }
-
-
+  
+  if(props.isLoggedIn === false){
     return (
-        <Container>
-        <Row>
-        <Col>
-            <h1>Signup</h1>
-            <Form className="form" >     
-     <p>{message}</p> 
-  <Form.Group controlId="formCategory1">
-    <Form.Label>Username</Form.Label>
-    <Form.Control type="text" defaultValue={username} onChange={e=>setUsername(e.target.value)} />
-  
-  </Form.Group>
-  <Form.Group controlId="formCategory2">
-    <Form.Label>Email</Form.Label>
-    <Form.Control type="email" defaultValue={email} onChange={e=>setEmail(e.target.value)} />
-  
-  </Form.Group>
-  <Form.Group controlId="formCategory3">
-    <Form.Label>Password</Form.Label>
-    <Form.Control type="password" defaultValue={password} onChange={e=>setPassword(e.target.value)} />
-  
-  </Form.Group>
-  <Form.Group controlId="formCategory4">
-    <Form.Label>Confirm Password</Form.Label>
-    <Form.Control type="password" defaultValue={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} />
-    </Form.Group>
-    <p>Already have an account?<a href="/">Login Here</a></p>
-    <Button variant="primary" onClick={onSubmit}>SIGNUP</Button>
-  </Form>
-   </Col>
-   <Col></Col>
-       </Row>
-        </Container>
-    )
+      <div className="auth-wrapper">
+        <div className="auth-inner">
+          <Form className="form" >    
+            <h1>Signup</h1> 
+            <p>{message}</p> 
+            <div className="form-group">
+                <label>Username</label>
+                <Form.Control type="text" className="form-control" defaultValue={username} onChange={e=>setUsername(e.target.value)} />
+            </div>
+            <div className="form-group">
+                <label>Email address</label>
+                <Form.Control type="email"  className="form-control" defaultValue={email} onChange={e=>setEmail(e.target.value)} />
+            </div>
+            <div className="form-group">
+                <label>Password</label>
+                <Form.Control type="password"  className="form-control" defaultValue={password} onChange={e=>setPassword(e.target.value)} />
+            </div>
+            <div className="form-group">
+                <label>Confirm Password</label>
+                <Form.Control type="password"  className="form-control"defaultValue={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} />
+            </div>
+            <p>Already have an account?<a href="/">Login Here</a></p>
+            <Button variant="primary" onClick={onSubmit}>SIGNUP</Button>
+            </Form>
+      </div>
+   </div>
+    );
+  }else{
+    return(
+  <Navigate to='/'/>
+  )
+  }
 }
 
 export default SignupContainer;
