@@ -2,19 +2,15 @@ import React from 'react';
 import { Link,Route,Navigate } from "react-router-dom";
 import { Navbar,Nav,NavDropdown } from 'react-bootstrap';
 import { Button} from 'react-bootstrap';
-
-
+import fire from '../fire.js';
   
-  function LogOut(e) {
-    e.preventDefault()
-    console.log(window.isLoggedIn);
-    window.isLoggedIn = false;
-    <Navigate to="/"/>
-}
+    const LogOut = () => {
+      fire.auth().signOut()
+    };
+
 
 function Header(props) {
-    
-  
+   
 return (
 <div>
   <Navbar bg="light" expand="lg">
@@ -24,8 +20,8 @@ return (
       <Nav className="mr-auto">
 
       <Link to="/" className="nav-link">Home</Link>
+      <Link to="#" className="nav-link">{fire.auth().currentUser.displayName}</Link>
       <Button variant="primary" onClick={LogOut}>Logout</Button>
-        
       </Nav> 
     
     </Navbar.Collapse>

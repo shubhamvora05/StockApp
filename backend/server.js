@@ -8,36 +8,42 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json());
+const mongoose = require('mongoose');
+const {IEXCloudClient}  = require("node-iex-cloud");
+const fetch = require("node-fetch");
+var WatchListAPI = require('./api/watchlist');
 
 
-// const userService = require("./user_service");
-
-// app.post("/signup", async (req, res) => {
-//   const { email, password, confirmPassword } = req.body;
-
-//   if(confirmPassword != password){
-//     res.json({message:"Password should be same as confirm password"});
-//   } 
-//   else{
-//   try {
-//     const user = await userService.addUser(email, password);
-//     res.status(201).json({message:"singup successful!",user});
-//   } catch (err) {
-//     res.json({ message: err.message });
-//   }
-// }
-// });
-
-// app.post("/signin", async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const user = await userService.authenticate(email, password);
-//     res.json({message:"Login successful!",user});
-//   } catch (err) {
-//     res.json({ message:"Please, try again or create a new account." });
-//   }
-// });
  
+mongoose.connect( 
+  'mongodb+srv://shubhamvora05:Stockdata@stockdata.lrlgm.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => {
+  console.log('Connected to database');
+})
+.catch((err) => {
+  console.log('Error connecting to DB', err.message);
+});
+
+app.use('/',WatchListAPI);
+
+
+// const iex = new IEXCloudClient(fetch, {
+//   //sandbox: true,
+//   publishable: "pk_285cb48c447f42ee90eb212c9e6e5a09",
+//   version: "v1"
+// });
+
+// iex
+//   .crypto("ETHUSD")
+//   .quote()
+//   .then(res => console.log(res));
+
+//https://cloud.iexapis.com/stable/stock/aapl/balance-sheet?period=annual
+
+// fetch("https://cloud.iexapis.com/stable/stockaapl/balance-sheet?period=annual?token=pk_285cb48c447f42ee90eb212c9e6e5a09")
+// .then(res => res.text())
+// .then(text => console.log(text));
+
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });

@@ -10,43 +10,29 @@ import { Navigate } from "react-router-dom";
 
 function SignupContainer(props) {
 
-    const [username, setUsername] = useState('');
+    const [displayName, setUsername] = useState('');
     const [email, setEmail] = useState('You@gmail.com');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('')
   
-    
+
    function onSubmit(e) {
       e.preventDefault()
       
       try{
-      fire.auth().createUserWithEmailAndPassword(email, password);
-      console.log("hello");
-      console.log("AFTER");
-    }catch(error) {
+      fire.auth().createUserWithEmailAndPassword(email, password).then(function(result) {
+        return result.user.updateProfile({
+          displayName: displayName
+        })
+      })
+      }catch(error) {
         setMessage(error.message);
-      }     
-
-      // const userObject = {
-         
-      //     email: email,
-      //     password: password,
-      //     confirmPassword: confirmPassword
-          
-      // };
-
-      // axios.post('http://localhost:5000/signup', userObject)
-      //     .then((res) => {
-      //       if(res.data.message === "singup successful!"){
-      //         window.isLoggedIn = true;
-      //       }
-      //       setMessage(res.data.message)
-      //     }).catch((err) => {
-            
-      //       setMessage("Please, try again after a while.")
-      //     });
+        console.log(error.message)
+      }    
   }
+
+
   
   if(props.isLoggedIn === false){
     return (
@@ -57,7 +43,7 @@ function SignupContainer(props) {
             <p>{message}</p> 
             <div className="form-group">
                 <label>Username</label>
-                <Form.Control type="text" className="form-control" defaultValue={username} onChange={e=>setUsername(e.target.value)} />
+                <Form.Control type="text" className="form-control" defaultValue={displayName} onChange={e=>setUsername(e.target.value)} />
             </div>
             <div className="form-group">
                 <label>Email address</label>

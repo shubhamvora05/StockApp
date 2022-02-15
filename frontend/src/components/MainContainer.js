@@ -17,11 +17,6 @@ function MainContainer(props) {
     fire.auth().onAuthStateChanged((user) => {
       return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
   });
-  
-  const signOut = () => {
-    fire.auth().signOut()
-  };
-
     
   return (
   <Router>
@@ -31,9 +26,7 @@ function MainContainer(props) {
     ) 
     : (
       <>
-      <span onClick={signOut}>
-        <a href="#">Sign out</a>
-      </span>
+      
       
       <Routes><Route exact path="/" element={<HomeContainer/>} /><Route path="/signup" element={<SignupContainer isLoggedIn = {isLoggedIn}/>} /></Routes>
      
