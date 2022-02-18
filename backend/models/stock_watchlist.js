@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 var dotenv = require('dotenv');
 
 var WatchListSchema =new mongoose.Schema({
-    _id:mongoose.Schema.Types.ObjectId,
     WatchList: {type:String, 
         required: true,
         },

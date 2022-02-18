@@ -25,11 +25,10 @@ exports.getWatchlist=function(req,res,next){
        
         var watchListName=req.body.watchListName;
         var user_id=req.body.user_id;
-
         var watchListDetails=new watchListModel({WatchList:watchListName,user_id:user_id});
         watchListDetails.save()
         .then(doc=>{
-            res.status(201).json({
+            res.json({
                 message:"Watchlist created Successfully",
                 results:doc
             });

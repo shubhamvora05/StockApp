@@ -26,8 +26,7 @@ function MainContainer(props) {
     ) 
     : (
       <>
-      
-      
+            
       <Routes><Route exact path="/" element={<HomeContainer/>} /><Route path="/signup" element={<SignupContainer isLoggedIn = {isLoggedIn}/>} /></Routes>
      
       </>

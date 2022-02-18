@@ -16,7 +16,7 @@ var WatchListAPI = require('./api/watchlist');
 
  
 mongoose.connect( 
-  'mongodb+srv://shubhamvora05:Stockdata@stockdata.lrlgm.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+  'mongodb+srv://shubhamvora05:Stockdata@stockdata.lrlgm.mongodb.net/StockList?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
   console.log('Connected to database');
 })

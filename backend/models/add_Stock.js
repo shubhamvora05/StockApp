@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
 var stockListSchema =new mongoose.Schema({
-    _id:mongoose.Schema.Types.ObjectId,
     WatchList_Id: {type:mongoose.Schema.Types.ObjectId, ref:'Watch_lists',
         required: true,
         },
