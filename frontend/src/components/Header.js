@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link,Route,Navigate } from "react-router-dom";
-import { Navbar,Nav,NavDropdown } from 'react-bootstrap';
+import { Link} from "react-router-dom";
+import { Navbar,Nav } from 'react-bootstrap';
 import { Button} from 'react-bootstrap';
 import fire from '../fire.js';
   

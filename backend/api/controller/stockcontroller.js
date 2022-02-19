@@ -1,5 +1,5 @@
 var StockModel = require('../../models/add_Stock');
-const mongoose = require('mongoose');
+var watchListModel = require('../../models/stock_watchlist');
 
 
 exports.addNewStock=function(req,res,next){
@@ -7,7 +7,6 @@ exports.addNewStock=function(req,res,next){
     var stockName=req.body.stockName;
     
     var stockDetails=new StockModel({
-        _id:mongoose.Types.ObjectId(),
         WatchList_Id:watchList,
         stock_ticker:stockName
       });
@@ -20,24 +19,22 @@ exports.addNewStock=function(req,res,next){
         });
     })
     .catch(err=>{
+        console.log(err);
         res.json(err);
     });
     }
 
-// get all password controller
+// get all stock controller
     exports.getAllStock=function(req,res,next){
     
         var watchListId=req.params.watchListId;
-    var StockModel= StockModel.find({WatchList_Id:watchListId});
-        StockModel
-        .exec()
-        .select("WatchList_Id stock_ticker")
-        .populate("WatchList_Id", "stock_ticker")
-        .exec()
-    .then(data=>{
+
+    var Stockfind= StockModel.find({WatchList_Id:watchListId});
+        Stockfind.exec()
+        .then(data=>{                
         res.status(200).json({
             message:"OK",
-            results:data
+            results:data,
         });
     })
     .catch(err=>{
@@ -45,7 +42,7 @@ exports.addNewStock=function(req,res,next){
     })
     }
 
-        // delete password controller
+        // delete stock controller
 
         exports.deleteStock=function(req,res,next){
             var stock_id=req.body.stock_id;

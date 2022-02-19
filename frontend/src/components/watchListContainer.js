@@ -2,6 +2,7 @@ import React, {useEffect}from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchWatchList,editWatchList,deleteWatchList} from '../Redux/action/stockListAction';
 import { Table,Button } from 'react-bootstrap';
+import { Link} from 'react-router-dom';
 import fire from '../fire.js';
 
 function GetWatchListContainer(props) {
@@ -11,18 +12,23 @@ function GetWatchListContainer(props) {
         dispatch(fetchWatchList(user_id))
     });
     const allWatchLists=useSelector(state=>state.allWatchLists);
+    
  
 //console.log(userDetails);
 if(allWatchLists){
-    var WatchlistData=allWatchLists.map((val,i)=>(
+    
+    var WatchlistData=allWatchLists.map((val,i)=>
         <tr key={i}>
      <td key={val._id}>{i+1}</td>       
     <td>{val._id}</td>
     <td>{val.WatchList}</td>
     <td><Button className="btn btn-primary" onClick={()=>editwatchList(val._id,val.WatchList)}>Edit</Button> 
-    <Button className="btn btn-danger" onClick={()=>deletewatchList(val._id)}>Delete</Button></td>
+   <Link to={`/watchlist/${ val._id}`}> <Button className="btn btn-primary"><span>View</span></Button></Link> 
+ 
+    <Button className="btn btn-danger" onClick={()=>deletewatchList(val._id)}>Delete</Button>
+    </td>
     </tr>
-    ))
+    )
 
 }else{
     WatchlistData=<tr>

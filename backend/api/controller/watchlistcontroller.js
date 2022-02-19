@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 exports.getWatchlist=function(req,res,next){
 
     var id=req.params.userid;
-    var getwatchlist= watchListModel.find({user_id:id},{'Watch_lists':1,'_id':1});
+    var getwatchlist= watchListModel.find({user_id:id},{'WatchList':1,'_id':1});
     getwatchlist.exec()
     .then(data=>{
         res.status(200).json({
@@ -18,8 +18,23 @@ exports.getWatchlist=function(req,res,next){
         res.json(err);
     })    
     }
+    
+    exports.getsinglewatchlist= function(req,res,next){
+        
+        var watchListId = req.params.listid;
+        var singlewatchlist = watchListModel.find({_id:watchListId},{'WatchList':1});
+        singlewatchlist.exec()
+    .then(data=>{
+       res.status(200).json({
+        message:"OK",
+        results:data,
+    });
+    }).catch(err=>{
+        res.json(err);
+    })
+}
 
-    // add category controller
+    // add wachlist controller
 
     exports.addWatchlist=function(req,res,next){
        

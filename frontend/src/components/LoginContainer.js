@@ -1,12 +1,10 @@
 import React,{ useState } from 'react'
 import { Form ,Button} from 'react-bootstrap';
-//import { Navigate } from "react-router-dom";
 import fire from '../fire.js';
 import '../css/loginsingup.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
-const axios = require('axios');
 
 
 function LoginContainer(props) {

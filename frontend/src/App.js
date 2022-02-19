@@ -1,6 +1,6 @@
 import MainContainer from './components/MainContainer';
 import {Provider} from 'react-redux';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import stockListReducer from './Redux/Reducer/stockListReducer';

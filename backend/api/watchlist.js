@@ -11,6 +11,8 @@ res.send('hello api');
 });
 router.get("/getwatchList/:userid",watchListController.getWatchlist);
 
+router.get("/getsinglewatchList/:listid",watchListController.getsinglewatchlist);
+
 // Add New watchlist Route
 router.post("/add-watchlist",watchListController.addWatchlist);
 
@@ -24,7 +26,7 @@ router.delete("/delete-watchlist/",watchListController.deleteWatchlist);
 router.post("/add-new-stock/",stockController.addNewStock);
 
 // get All ticker Details Route
-router.get("/getAllStocks/",stockController.getAllStock);
+router.get("/getAllStocks/:watchListId",stockController.getAllStock);
 
 
 // delete ticker records route

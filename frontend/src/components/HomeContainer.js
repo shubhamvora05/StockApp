@@ -4,6 +4,7 @@ import { addWatchList,updateWatchList} from '../Redux/action/stockListAction';
 import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
 import GetWatchListContainer from './watchListContainer';
 import fire from '../fire.js';
+import Header from './Header';
 
 function HomeContainer(props) {
   const user_id=fire.auth().currentUser.uid;
@@ -17,12 +18,13 @@ var actionButton=<Button variant="primary" onClick={()=>props.addList(watchList,
     }
 
     return (
+      
         <Container>
+          <Header/>
         <Row>
         <Col>
-    <h1>{props.action} WatchLists </h1>
+    <h1>{props.action} WatchList </h1>
             <Form className="form">     
-            <h2>WatchList ListName - {props.watchList}</h2>   
     <p>{props.msg}</p>
   <Form.Group controlId="formCategory">
     <Form.Label>Enter WatchList name</Form.Label>

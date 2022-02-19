@@ -1,5 +1,5 @@
 
-import {ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList} from './stockListType';
+import {ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock} from './stockListType';
 const axios = require('axios');
 
 
@@ -20,6 +20,28 @@ export const addWatchList=(watchlist,user_id)=>{
     }
 }
 
+export const fetchSingleWatchList = (watchlist_id)=>{
+  return function(dispatch){
+      
+    var OPTIONS = {
+        url: "http://localhost:5000/getsinglewatchList/"+watchlist_id,
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+
+    axios(OPTIONS)
+    .then(res=>
+        {
+          const watchlist=res.data.results;
+           dispatch(getWatchList(watchlist));
+        })
+    .catch(err=>console.log(err));     
+}
+
+}
+
 export const fetchWatchList=(user_id)=>{
   
     return function(dispatch){
@@ -35,20 +57,17 @@ export const fetchWatchList=(user_id)=>{
         axios(OPTIONS)
         .then(res=>
             {
-                const wathclists=res.data.results;
-               // console.log(categories);
-               dispatch(getWatchList(wathclists));
+              const watchlists=res.data.results;
+               dispatch(getWatchList(watchlists));
             })
-        .catch(err=>console.log(err)); 
-
-    
+        .catch(err=>console.log(err));     
 }
 }
 
-export const getWatchList=(wathclists)=>{
+export const getWatchList=(watchlists)=>{
     return {
         type:FETCH_WatchList,
-        payload:wathclists
+        payload:watchlists
     }
 }
 
@@ -94,4 +113,75 @@ axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
       type:DELETE_WatchList,
       payload:id,
   }
+}
+
+
+//   -----------------------------------    actions for stock ------------------------------
+
+export const addStock=(watchlist,stock)=>{
+  var OPTIONS = {
+      url: "http://localhost:5000/add-new-stock",
+      method: "POST",
+      data:{watchList:watchlist,stockName:stock},
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+
+  axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
+  return{
+      type:ADD_Stock,
+      payload:stock
+  }
+}
+
+export const fetchStock=(watchlist_id)=>{
+   
+  return function(dispatch){
+    
+      var OPTIONS = {
+          url: "http://localhost:5000/getAllStocks/"+watchlist_id,
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+  
+      axios(OPTIONS)
+      .then(res=>
+          {
+            const stocks=res.data.results;
+         //   const CurrentWatchList = res.data.WatchList_Name;
+             dispatch(getstock(stocks));
+          })
+      .catch(err=>console.log(err)); 
+}
+}
+
+export const getstock=(stocks)=>{
+  return {
+      type:FETCH_Stock,
+      payload:stocks
+    //  payload:{stocks,CurrentWatchList}
+      //payload:stocks
+  }
+}
+
+
+export const deleteStock=(id)=>{
+var OPTIONS = {
+  url: "http://localhost:5000/delete-Stock/",
+  method: "DELETE",
+  data:{stock_id:id},
+  headers: {
+    "content-type": "application/json",
+  },
+}
+
+axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
+
+return {
+    type:DELETE_Stock,
+    payload:id,
+}
 }
