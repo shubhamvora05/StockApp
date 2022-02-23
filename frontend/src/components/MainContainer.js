@@ -29,7 +29,8 @@ function MainContainer(props) {
     : (
       <>
             
-      <Routes><Route exact path="/" element={<HomeContainer/>} /><Route name="viewlist" path="/watchlist/:id" element={<StockListContainer/>} /><Route path="/signup" element={<SignupContainer isLoggedIn = {isLoggedIn}/>} /></Routes>
+      <Routes><Route exact path="/" element={<HomeContainer/>} />
+      <Route path="/watchlist/:id/" element={<StockListContainer/>} /><Route path="/signup" element={<SignupContainer isLoggedIn = {isLoggedIn}/>} /></Routes>
      
       </>
     

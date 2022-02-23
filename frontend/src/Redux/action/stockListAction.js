@@ -119,6 +119,7 @@ axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
 //   -----------------------------------    actions for stock ------------------------------
 
 export const addStock=(watchlist,stock)=>{
+  //console.log(stock);
   var OPTIONS = {
       url: "http://localhost:5000/add-new-stock",
       method: "POST",

@@ -20,6 +20,13 @@ function StockListContainer(props) {
     });
    
     const currentWatchList=useSelector(state=>state.allWatchLists); 
+    var listNameVar;
+   if(currentWatchList.length){
+     console.log(currentWatchList);
+    listNameVar = <h1>Watchlist Name - {currentWatchList[0].WatchList}</h1>
+   }else{
+    listNameVar = <h1>Watchlist Name - </h1>
+   }
   
     return (
       
@@ -27,7 +34,7 @@ function StockListContainer(props) {
           <Header/>
         <Row>
         <Col>
-        <h1>Watchlist Name - {currentWatchList[0].WatchList}</h1>   
+        {listNameVar}
         <h2>Add Stocks Here</h2>
             <Form className="form">     
           

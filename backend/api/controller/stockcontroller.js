@@ -5,7 +5,7 @@ var watchListModel = require('../../models/stock_watchlist');
 exports.addNewStock=function(req,res,next){
     var watchList=req.body.watchList;
     var stockName=req.body.stockName;
-    
+    //console.log(stockName);
     var stockDetails=new StockModel({
         WatchList_Id:watchList,
         stock_ticker:stockName
@@ -19,7 +19,6 @@ exports.addNewStock=function(req,res,next){
         });
     })
     .catch(err=>{
-        console.log(err);
         res.json(err);
     });
     }
@@ -46,6 +45,7 @@ exports.addNewStock=function(req,res,next){
 
         exports.deleteStock=function(req,res,next){
             var stock_id=req.body.stock_id;
+            //console.log(stock_id);
             StockModel.findByIdAndRemove(stock_id)
               .then(doc=>{
                res.status(201).json({
