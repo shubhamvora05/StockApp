@@ -1,5 +1,5 @@
 var StockModel = require('../../models/add_Stock');
-var watchListModel = require('../../models/stock_watchlist');
+var DefaultStockModel = require('../../models/stocks');
 
 
 exports.addNewStock=function(req,res,next){
@@ -11,7 +11,7 @@ exports.addNewStock=function(req,res,next){
         stock_ticker:stockName
       });
 
-      stockDetails.save()
+    stockDetails.save()
     .then(doc=>{
         res.status(201).json({
             message:"Stock Inserted Successfully",
@@ -29,6 +29,21 @@ exports.addNewStock=function(req,res,next){
         var watchListId=req.params.watchListId;
 
     var Stockfind= StockModel.find({WatchList_Id:watchListId});
+        Stockfind.exec()
+        .then(data=>{                
+        res.status(200).json({
+            message:"OK",
+            results:data,
+        });
+    })
+    .catch(err=>{
+        res.json(err);
+    })
+    }
+
+    // get all default stock controller
+    exports.getDefaultStock=function(req,res,next){
+    var Stockfind= DefaultStockModel.find();
         Stockfind.exec()
         .then(data=>{                
         res.status(200).json({

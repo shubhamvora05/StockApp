@@ -1,5 +1,5 @@
 
-import {ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock} from './stockListType';
+import {ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
 const axios = require('axios');
 
 
@@ -117,6 +117,35 @@ axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
 
 
 //   -----------------------------------    actions for stock ------------------------------
+
+export const getDefaultStocks=()=>{
+  return function(dispatch){
+    
+    var OPTIONS = {
+        url: "http://localhost:5000/getDefaultStock",
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+
+    axios(OPTIONS)
+    .then(res=>
+        {
+          //console.log(res.data.results);
+          const defaultStocks=res.data.results;
+           dispatch(getDefaultstock(defaultStocks));
+        })
+    .catch(err=>console.log(err)); 
+}
+}
+
+export const getDefaultstock=(defaultStocks)=>{
+  return {
+      type:Get_Default_Stock,
+      payload:defaultStocks
+  }
+}
 
 export const addStock=(watchlist,stock)=>{
   //console.log(stock);

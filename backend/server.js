@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 const {IEXCloudClient}  = require("node-iex-cloud");
 const fetch = require("node-fetch");
 var WatchListAPI = require('./api/watchlist');
+var stock = require('./models/stocks')
 
 
  
@@ -25,6 +26,20 @@ mongoose.connect(
 });
 
 app.use('/',WatchListAPI);
+
+// TO add stocks into the database
+
+// var stockAdd=new stock({
+//   tickerSymbol:'BAC',
+// });
+
+// stockAdd.save()
+//     .then(res=>{
+//        console.log("stock added");
+//     })
+//     .catch(err=>{
+//         console.log(err);
+//     });
 
 
 // const iex = new IEXCloudClient(fetch, {

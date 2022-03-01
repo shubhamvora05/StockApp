@@ -6,3 +6,4 @@ export const DELETE_WatchList='DELETE_WatchList';
 export const ADD_Stock = 'ADD_Stock';
 export const FETCH_Stock = 'FETCH_Stock'; 
 export const DELETE_Stock = 'DELETE_Stock';
+export const Get_Default_Stock = 'Get_Default_Stock';
