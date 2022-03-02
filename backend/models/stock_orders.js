@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
 var stockOrderSchema =new mongoose.Schema({
-    user_Id: {type:mongoose.Schema.Types.ObjectId, ref:'user_details',
+    user_Id: {type:String,
         required: true,
         },
-    stock_Id: {type:mongoose.Schema.Types.ObjectId, ref:'Stocks',
+    stock_Id: {type:String,
         required: true,
     },
     Total_quantity: {type: Number, 

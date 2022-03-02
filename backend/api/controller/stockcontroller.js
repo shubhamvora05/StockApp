@@ -85,91 +85,119 @@ exports.buyStock = function(req,res,next){
   var AvailableData;
   var previousBuyPrice;
   var previousQuantity;
-  var isBuypossible = false;
-  var isBought = false;
+ 
 
   var usermodel = userModel.find({user_Id:user_Id});
       usermodel.exec()
       .then(data=>{
-       if(data[0].totalAmount>=Total_quantity*Buy_price){
-           isBuypossible = true;
+
+       if(!data.length){
+        res.json("Please! sign in or sign up.");
+       }else if(data[0].totalAmount>=Total_quantity*Buy_price){
+
+        var getstockorder = StockOrderModel.find({stock_Id:stock_Id, user_Id:user_Id})
+        getstockorder.exec()
+        .then(data=>{
+            if(data.length){
+    
+            AvailableData = data[0]._id;
+            previousBuyPrice = data[0].Buy_price;
+            previousQuantity = data[0].Total_quantity;
+    
+            StockOrderModel.findById(AvailableData,function(err,data){
+                data.Total_quantity=Total_quantity ? Total_quantity+previousQuantity : data.Total_quantity;
+                data.Buy_price=Buy_price ? (Total_quantity*Buy_price + previousQuantity*previousBuyPrice)/(previousQuantity + Total_quantity )*2 : data.Buy_price;
+                data.save()
+               
+            })
+            }else{
+    
+            var buynewstock=new StockOrderModel({
+                    stock_Id:stock_Id, 
+                    user_Id:user_Id,
+                    Total_quantity:Total_quantity,
+                    Buy_price:Buy_price
+                  });
+            
+                  buynewstock.save()
+            }
+        })
+
+      
+       userModel.findById(data[0]._id,function(err,data){
+            data.totalAmount-=Total_quantity*Buy_price;
+            data.save()
+            .then(doc=>{
+                res.json({
+                    message:"Stock Bought Successfully"
+                });
+             })
+           }) 
+
        }else{
-           res.json("You don't have enough fund.");
+         res.json("You don't have enough fund.");
        }
       }) 
       .catch(err=>{
+          console.log(err);
           res.json(err);
       })
- 
-  var getstockorder = StockOrderModel.find({stock_Id:stock_Id, user_Id:user_Id})
-    getstockorder.exec()
-    .then(data=>{
-        AvailableData = data[0]._id;
-        previousBuyPrice = data[0].Buy_price;
-        previousQuantity = data[0].Total_quantity;
-    })
-    .catch(err=>{
-        res.json(err);
-    })
-
-// if current stock is in user portfolio update it
-
-    if(AvailableData){
-
-    StockOrderModel.findById(AvailableData,function(err,data){
-        data.Total_quantity=Total_quantity ? Total_quantity+previousQuantity : data.Total_quantity;
-        data.Buy_price=Buy_price ? (Buy_price + previousBuyPrice)/2 : data.Buy_price;
-        data.save()
-        .then(doc=>{
-            isBought = true;
-            res.status(201).json({
-                message:"Stock bought Successfully",
-                results:doc
-            });
-         })
-         .catch(err=>{
-             res.json(err);
-         })
-    });
-
-    }
-    else{
-
-    var buynewstock=new StockOrderModel({
-        stock_Id:stock_Id, 
-        user_Id:user_Id,
-        Total_quantity:Total_quantity,
-        Buy_price:Buy_price
-      });
-
-      buynewstock.save()
-    .then(doc=>{
-        isBought = true;
-        res.status(201).json({
-            message:"Stock Buyed Successfully",
-            results:doc
-        });
-    })
-    .catch(err=>{
-        res.json(err);
-    });  
-    }
-
-    if(isBought){
-    let usermodel1 = userModel.find({user_Id:user_Id});
-      usermodel1.exec()
-      .then(data=>{
-       data[0].totalAmount-=Total_quantity*Buy_price
-           res.json("Stock Bought");
-       }) 
-      .catch(err=>{
-          res.json(err);
-      })
-    }
-
 }
 
     // sell stock
 exports.sellStock = function(req,res,next){
-    
+    var stock_Id = req.body.stock_id;
+    var user_Id = req.body.user_Id;
+    var sell_price = req.body.Sell_price;
+    var sell_quantity = req.body.Sell_quantity;
+    var AvailableData;
+    var Total_Quantity;   
+  
+    var usermodel = userModel.find({user_Id:user_Id});
+        usermodel.exec()
+        .then(data=>{
+          if(data.length){
+            var userid = data[0]._id;
+          var getstockorder = StockOrderModel.find({stock_Id:stock_Id, user_Id:user_Id})
+          getstockorder.exec()
+          .then(data=>{
+
+            if(!data.length){
+
+                res.json("you don't have enough quantity to sell it.");
+
+            }else if(data[0].Total_quantity>=sell_quantity){
+
+                AvailableData = data[0]._id;
+                Total_Quantity = data[0].Total_quantity;
+      
+                StockOrderModel.findById(AvailableData,function(err,data){
+                  data.Total_quantity=Total_Quantity-sell_quantity;
+                  data.save()
+              })
+
+              userModel.findById(userid,function(err,data){
+                data.totalAmount+=sell_quantity*sell_price;
+                data.save()
+                .then(doc=>{
+                    res.json({
+                        message:"Stock sold Successfully"
+                    });
+                 })
+               }) 
+               
+            }else{
+
+                res.json("you don't have enough quantity to sell it.");
+              
+            }   
+          })
+        }else{
+            res.json("user is invalid!")
+        }
+        }) 
+        .catch(err=>{
+            console.log(err);
+            res.json(err);
+        })
 }
