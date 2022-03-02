@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 var userSchema =new mongoose.Schema({
-    user_Id: {type:Stirng,
+    user_Id: {type:String,
         required: true,
         },
     totalAmount: {type: Number, 
-        required: true,
+        //required: true,
         default: 500000
         },
     date:{

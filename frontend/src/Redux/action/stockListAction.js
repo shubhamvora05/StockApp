@@ -1,5 +1,6 @@
 
-import {ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
+import {Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
+import fire from '../../fire.js';
 const axios = require('axios');
 
 
@@ -214,4 +215,23 @@ return {
     type:DELETE_Stock,
     payload:id,
 }
+}
+
+// ____________________ users actions ________________
+
+export const addUser=(user_id)=>{
+    var OPTIONS = {
+        url: "http://localhost:5000/user/add-user",
+        method: "POST",
+        data:{user_id:fire.auth().currentUser.uid},
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
+
+    return{
+        type:Add_User,
+        payload:fire.auth().currentUser.uid,
+    }
 }

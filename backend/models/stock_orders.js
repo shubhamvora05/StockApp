@@ -18,6 +18,6 @@ var stockOrderSchema =new mongoose.Schema({
         type: Date, 
         default: Date.now }
 });
-stockOrderchema.plugin(mongoosePaginate);
+
 var StockOrderModel = mongoose.model('Stock_order', stockOrderSchema);
 module.exports=StockOrderModel;

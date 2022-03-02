@@ -35,4 +35,10 @@ router.get("/getAllStocks/:watchListId",stockController.getAllStock);
 // delete ticker records route
 router.delete("/delete-Stock/",stockController.deleteStock);
 
+// buy stock
+router.post("/buy-sotck/",stockController.buyStock);
+
+// sell stokc
+router.post("/sell-sotck/",stockController.sellStock);
+
 module.exports=router;

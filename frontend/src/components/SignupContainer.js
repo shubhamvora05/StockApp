@@ -3,7 +3,9 @@ import { Form ,Button} from 'react-bootstrap';
 import fire from '../fire.js';
 import '../css/loginsingup.css';
 import { Navigate } from "react-router-dom";
-//const axios = require('axios');
+import { addUser} from '../Redux/action/stockListAction';
+import {connect} from 'react-redux';
+
 
 
 
@@ -17,16 +19,17 @@ function SignupContainer(props) {
     const [message, setMessage] = useState('')
   
 
-   function onSubmit(e) {
+ function onSubmit(e) {
       e.preventDefault()
       
       try{
-      fire.auth().createUserWithEmailAndPassword(email, password).then(function(result) {
-        return result.user.updateProfile({
+    fire.auth().createUserWithEmailAndPassword(email, password).then(function(result) {
+      props.adduser(result.user.uid);
+      return result.user.updateProfile({
           displayName: displayName
         })
       })
-      }catch(error) {
+  }catch(error) {
         setMessage(error.message);
         console.log(error.message)
       }    
@@ -70,4 +73,21 @@ function SignupContainer(props) {
   }
 }
 
-export default SignupContainer;
+const mapStatetoProps=(state)=>{
+  return{
+   watchList:state.watchList,
+     action:state.action,
+     id:state.id,
+     msg:state.msg
+  }
+ }
+
+const mapDispatchtoProps=(dispatch)=>{
+  return{
+     adduser:function(user_id){
+         dispatch(addUser(user_id));
+     }
+  }
+ }
+ 
+export default connect(mapStatetoProps,mapDispatchtoProps)(SignupContainer);

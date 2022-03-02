@@ -21,26 +21,7 @@ function LoginContainer(props) {
         setMessage(error.message);
       }
       
-      );
-
-      // const userObject = {
-         
-      //     email: email,
-      //     password: password,
-          
-      // };
-
-      // axios.post('http://localhost:5000/signin', userObject)
-      //     .then((res) => {
-      //       if(res.data.message === "Login successful!"){
-      //         window.isLoggedIn = true;
-      //         <Navigate to="/"/>
-      //       }
-      //       setMessage(res.data.message)
-      //     }).catch((error) => {
-      //       setMessage("Please, try again or create a new account, if you are a new user.")
-      //     });
-   
+      );   
   }
 
     return (

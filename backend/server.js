@@ -11,8 +11,9 @@ app.use(express.json());
 const mongoose = require('mongoose');
 const {IEXCloudClient}  = require("node-iex-cloud");
 const fetch = require("node-fetch");
-var WatchListAPI = require('./api/watchlist');
-var stock = require('./models/stocks')
+var WatchListAPI = require('./api/watchlistAPI');
+var stock = require('./models/stocks');
+var userApi = require('./api/userAPI');
 
 
  
@@ -26,6 +27,7 @@ mongoose.connect(
 });
 
 app.use('/',WatchListAPI);
+app.use('/user',userApi);
 
 // TO add stocks into the database
 

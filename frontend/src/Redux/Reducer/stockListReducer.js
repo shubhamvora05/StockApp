@@ -1,4 +1,4 @@
-import {ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,ADD_Stock,FETCH_Stock,DELETE_Stock,Get_Default_Stock} from '../action/stockListType';
+import {Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,ADD_Stock,FETCH_Stock,DELETE_Stock,Get_Default_Stock} from '../action/stockListType';
 const initialState={
     watchList:'',
     allWatchLists:[],
@@ -60,6 +60,9 @@ const stockListReducer=(state=initialState, action)=>{
             ...state,
             msg:"Stock Deleted Successfully"
           
+        }
+        case Add_User:return{
+            ...state
         }
         default:return state;
     }
