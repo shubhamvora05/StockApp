@@ -24,6 +24,24 @@ exports.addNewStock=function(req,res,next){
     });
     }
 
+// check if stock is available or not
+exports.isStock=function(req,res,next){
+
+    var stock = req.params.stock;
+    var Stockfind= DefaultStockModel.find({tickerSymbol:stock});
+        Stockfind.exec()
+        .then(data=>{                
+        res.status(200).json({
+            message:"OK",
+            results:data,
+        });
+    })
+    .catch(err=>{
+        res.json(err);
+    })
+
+}
+
 // get all stock controller
     exports.getAllStock=function(req,res,next){
     

@@ -25,6 +25,9 @@ router.delete("/delete-watchlist/",watchListController.deleteWatchlist);
 // add new ticker
 router.post("/add-new-stock/",stockController.addNewStock);
 
+// check if stock is available
+router.get("/isStock/:stock",stockController.isStock);
+
 // get All avilable stocks
 router.get("/getDefaultStock/",stockController.getDefaultStock);
 

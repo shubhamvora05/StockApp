@@ -1,4 +1,4 @@
-import {Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,ADD_Stock,FETCH_Stock,DELETE_Stock,Get_Default_Stock} from '../action/stockListType';
+import { Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,ADD_Stock,FETCH_Stock,DELETE_Stock,Get_Default_Stock} from '../action/stockListType';
 const initialState={
     watchList:'',
     allWatchLists:[],
@@ -8,6 +8,7 @@ const initialState={
     Stock:'',
     allStocks:[],
     defaultStocks:[],
+    stockData:[]
 }
 
 const stockListReducer=(state=initialState, action)=>{
@@ -44,6 +45,10 @@ const stockListReducer=(state=initialState, action)=>{
         case Get_Default_Stock:return{
             ...state,
             defaultStocks:action.payload
+        }
+        case  Get_Stock_Data:return{
+            ...state,
+            stockData:action.payload
         }
         case ADD_Stock:return{
             ...state,

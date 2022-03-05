@@ -1,8 +1,9 @@
 
-import {Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
+import {Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
 import fire from '../../fire.js';
 const axios = require('axios');
 
+// action to add watchlist
 
 export const addWatchList=(watchlist,user_id)=>{
     var OPTIONS = {
@@ -20,6 +21,8 @@ export const addWatchList=(watchlist,user_id)=>{
         payload:watchlist
     }
 }
+
+// action to fetch single watchlist to show its details
 
 export const fetchSingleWatchList = (watchlist_id)=>{
   return function(dispatch){
@@ -43,6 +46,9 @@ export const fetchSingleWatchList = (watchlist_id)=>{
 
 }
 
+
+// action to feacth all watchlists
+
 export const fetchWatchList=(user_id)=>{
   
     return function(dispatch){
@@ -65,6 +71,7 @@ export const fetchWatchList=(user_id)=>{
 }
 }
 
+// to get all watchlist
 export const getWatchList=(watchlists)=>{
     return {
         type:FETCH_WatchList,
@@ -72,6 +79,7 @@ export const getWatchList=(watchlists)=>{
     }
 }
 
+// to edit watchlist
 export const editWatchList=(id,wathclists)=>{
   return {
       type:EDIT_WatchList,
@@ -80,6 +88,7 @@ export const editWatchList=(id,wathclists)=>{
   }
 }
 
+// to update watchlists
 export const updateWatchList=(id,wathclist)=>{
   var OPTIONS = {
     url: "http://localhost:5000/update-watchlist",
@@ -98,6 +107,7 @@ axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
   }
 }
 
+// to delete watchlist
 export const deleteWatchList=(id)=>{
   var OPTIONS = {
     url: "http://localhost:5000/delete-watchlist",
@@ -119,6 +129,7 @@ axios(OPTIONS).then(res=>console.log(res)).catch(err=>console.log(err));
 
 //   -----------------------------------    actions for stock ------------------------------
 
+// to get all default stocks
 export const getDefaultStocks=()=>{
   return function(dispatch){
     
@@ -148,6 +159,49 @@ export const getDefaultstock=(defaultStocks)=>{
   }
 }
 
+// to get stock data using API
+
+export const getStockData = (stockSymbol) =>{
+  return function(dispatch){
+  var OPTIONS = {
+    url: "http://localhost:5000/isStock/"+stockSymbol,
+    method: "GET",
+    data:{},
+    headers: {
+      "content-type": "application/json",
+    },
+  }
+  
+  axios(OPTIONS).then(res=> {
+    if(res.data.results.length){
+      var OPTIONS = {
+        url: "https://cloud.iexapis.com/stable/stock/"+res.data.results[0].tickerSymbol+"/previous?token=pk_285cb48c447f42ee90eb212c9e6e5a09",
+        method: "GET",
+        data:{},
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+      axios(OPTIONS).then(res=> {
+        dispatch(getStockDataFromAPI(res.data));
+      })
+    }
+})
+    .catch(err=>console.log(err));
+  }
+}
+
+export const getStockDataFromAPI = (stockData) =>{
+  var stockDataList = [];
+  stockDataList[0]=stockData;
+  return {
+    type:Get_Stock_Data,
+    payload:stockDataList,
+} 
+}
+
+// to add stock in particular watchlists
+
 export const addStock=(watchlist,stock)=>{
   //console.log(stock);
   var OPTIONS = {
@@ -166,6 +220,7 @@ export const addStock=(watchlist,stock)=>{
   }
 }
 
+// to get all stock of particular watchlist
 export const fetchStock=(watchlist_id)=>{
    
   return function(dispatch){
@@ -198,7 +253,7 @@ export const getstock=(stocks)=>{
   }
 }
 
-
+// to delete stock
 export const deleteStock=(id)=>{
 var OPTIONS = {
   url: "http://localhost:5000/delete-Stock/",
@@ -217,8 +272,10 @@ return {
 }
 }
 
+
 // ____________________ users actions ________________
 
+// to add user in database
 export const addUser=(user_id)=>{
     var OPTIONS = {
         url: "http://localhost:5000/user/add-user",

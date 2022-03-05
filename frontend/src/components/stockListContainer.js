@@ -22,7 +22,7 @@ function StockListContainer(props) {
 
     if(allDefaultStocks){
       var DefaultStockData=allDefaultStocks.map((val,i)=>
-       <option value={val.tickerSymbol}>{val.tickerSymbol}</option>
+       <option value={val.tickerSymbol} key={val._id}>{val.tickerSymbol}</option>
       )
     }
 

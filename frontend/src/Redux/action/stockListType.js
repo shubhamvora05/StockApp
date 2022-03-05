@@ -7,4 +7,5 @@ export const ADD_Stock = 'ADD_Stock';
 export const FETCH_Stock = 'FETCH_Stock'; 
 export const DELETE_Stock = 'DELETE_Stock';
 export const Get_Default_Stock = 'Get_Default_Stock';
+export const Get_Stock_Data = ' Get_Stock_Data'; 
 export const Add_User = 'Add_User';

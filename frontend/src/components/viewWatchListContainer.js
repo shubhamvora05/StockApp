@@ -2,11 +2,10 @@ import React,{useEffect} from 'react';
 import { useSelector,useDispatch} from 'react-redux';
 import { fetchStock, deleteStock} from '../Redux/action/stockListAction';
 import { Table,Button } from 'react-bootstrap';
-
+import { Link} from 'react-router-dom';
 
 
 function ViewWatchListContainer(props) {
-     
    
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -20,7 +19,7 @@ if(allStocks){
      <td key={val._id}>{i+1}</td>       
     <td>{val._id}</td>
     <td>{val.stock_ticker}</td>
-    <td><Button className="btn btn-primary">View</Button> 
+    <td><Link to={`/stock/${ val.stock_ticker}`}> <Button className="btn btn-primary"><span>View</span></Button></Link> 
     <Button className="btn btn-danger" onClick={()=>deleteStk(val._id)}>Delete</Button></td>
     </tr>
     ))
