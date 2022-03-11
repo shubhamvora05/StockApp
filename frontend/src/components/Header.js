@@ -20,7 +20,8 @@ return (
       <Nav className="mr-auto">
 
       <Link to="/" className="nav-link">Home</Link>
-      <Link to="#" className="nav-link">{fire.auth().currentUser.displayName}</Link>
+      <Link to={`/user/${ fire.auth().currentUser.uid}`} className="nav-link">{fire.auth().currentUser.displayName}</Link>
+
       <Button variant="primary" onClick={LogOut}>Logout</Button>
       </Nav> 
     

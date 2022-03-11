@@ -6,6 +6,7 @@ import SignupContainer from './SignupContainer';
 import HomeContainer from './HomeContainer';
 import StockListContainer from './stockListContainer';
 import ViewStockContainer from './viewStockContainer';
+import UserProfileContainer from './userProfileContainer';
 
 import fire from '../fire.js';
 import '../css/loginsingup.css';
@@ -30,11 +31,13 @@ function MainContainer(props) {
     : (
       <>
             
-      <Routes><Route exact path="/" element={<HomeContainer/>} />
+      <Routes>
+      <Route exact path="/" element={<HomeContainer/>} />
       <Route path="/watchlist/:id/" element={<StockListContainer/>} />
       <Route path="/stock/:id/" element={<ViewStockContainer/>} />
-      <Route path="/signup" element={<SignupContainer isLoggedIn = {isLoggedIn}/>} /></Routes>
-     
+      <Route path="/signup" element={<SignupContainer isLoggedIn = {isLoggedIn}/>} />
+      <Route path="/user/:id/" element={<UserProfileContainer/>} />
+      </Routes>
       </>
     
     )}

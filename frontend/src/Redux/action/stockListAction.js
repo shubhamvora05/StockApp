@@ -1,5 +1,5 @@
 
-import {BUY_STOCK,SELL_STOCK,Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
+import {get_user_details,BUY_STOCK,SELL_STOCK,Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
 import fire from '../../fire.js';
 const axios = require('axios');
 
@@ -354,4 +354,34 @@ export const addUser=(user_id)=>{
         type:Add_User,
         payload:fire.auth().currentUser.uid,
     }
+}
+
+// to get user portfolio details
+
+export const getUserInformation=(user_id)=>{
+  return function(dispatch){
+  var OPTIONS = {
+      url: "http://localhost:5000/user/get-user-details/"+user_id,
+      method: "GET",
+      data:{user_id:user_id},
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  axios(OPTIONS)
+  .then(res=>{
+       var currentUserData = [];
+       currentUserData[0] = res.data.tradableAmount;
+       currentUserData[1] = res.data.portfolioStocks;
+       dispatch(userInfo(currentUserData));
+  })
+  .catch(err=>console.log(err));
+}
+}
+
+export const userInfo=(userData)=>{
+return{
+  type:get_user_details,
+  payload:userData,
+}
 }

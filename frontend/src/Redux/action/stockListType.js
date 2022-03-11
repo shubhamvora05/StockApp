@@ -11,3 +11,4 @@ export const Get_Stock_Data = ' Get_Stock_Data';
 export const BUY_STOCK = 'BUY_STOCK';
 export const SELL_STOCK = 'SELL_STOCK';
 export const Add_User = 'Add_User';
+export const get_user_details = 'get_user_details';
