@@ -6,6 +6,7 @@ import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
 import Header from './Header';
 import fire from '../fire.js';
+import ChartContainer from './chartContainer';
 
 function ViewStockContainer(props) {
 
@@ -33,10 +34,12 @@ function ViewStockContainer(props) {
     return (
         <Container>
             <Header/>
+            <ChartContainer/>
             <Row>
                 <h1>stock {id}</h1>
                 {StockData}
             </Row>
+            
             <Row>
                 <Form className="form">     
                     <p>{props.buystockData[0]}</p>

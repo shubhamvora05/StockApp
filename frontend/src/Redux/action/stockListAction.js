@@ -1,5 +1,5 @@
 
-import {get_user_details,BUY_STOCK,SELL_STOCK,Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
+import {STOCK_CHART,get_user_details,BUY_STOCK,SELL_STOCK,Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
 import fire from '../../fire.js';
 const axios = require('axios');
 
@@ -303,6 +303,7 @@ return {
 }
 }
 
+// to sell stock
 export const sellCurrentStock=(stock_id,user_id,sell_price,total_quantity)=>{
   return function(dispatch){
   var OPTIONS = {
@@ -333,8 +334,31 @@ export const sellStock=(sellStockData)=>{
   }
   }
 
-// to sell stock
+// to get stock chart data
+export const getStockChartData = (stockSymbol) =>{
+  return function(dispatch){
+      var OPTIONS = {
+        url: "https://cloud.iexapis.com/stable/stock/"+stockSymbol+"/chart/1y?token=pk_285cb48c447f42ee90eb212c9e6e5a09",
+        method: "GET",
+        data:{},
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+      axios(OPTIONS).then(res=> {
+        console.log(res.data);
+        dispatch(getStockDataFromAPI(res.data));
+      })
+    .catch(err=>console.log(err));
+  }
+}
 
+export const getStockChartDataFromAPI = (stockChartData) =>{
+  return {
+    type:Get_Stock_Data,
+    payload:stockChartData,
+} 
+}
 
 // ____________________ users actions ________________
 
