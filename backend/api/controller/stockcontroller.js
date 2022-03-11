@@ -110,7 +110,9 @@ exports.buyStock = function(req,res,next){
       .then(data=>{
 
        if(!data.length){
-        res.json("Please! sign in or sign up.");
+        res.json({
+            message:"Please! sign in or sign up.",
+        });
        }else if(data[0].totalAmount>=Total_quantity*Buy_price){
 
         var getstockorder = StockOrderModel.find({stock_Id:stock_Id, user_Id:user_Id})
@@ -147,13 +149,18 @@ exports.buyStock = function(req,res,next){
             data.save()
             .then(doc=>{
                 res.json({
-                    message:"Stock Bought Successfully"
+                    message:"Stock Bought Successfully",
+                    BuyPrice: Buy_price,
+                    totalAmountUsed:Total_quantity*Buy_price
                 });
              })
            }) 
 
        }else{
-         res.json("You don't have enough fund.");
+         res.json({
+             message:"You don't have enough fund.",
+             TradableAmount:data[0].totalAmount
+        });
        }
       }) 
       .catch(err=>{
@@ -164,6 +171,7 @@ exports.buyStock = function(req,res,next){
 
     // sell stock
 exports.sellStock = function(req,res,next){
+
     var stock_Id = req.body.stock_id;
     var user_Id = req.body.user_Id;
     var sell_price = req.body.Sell_price;
@@ -182,7 +190,10 @@ exports.sellStock = function(req,res,next){
 
             if(!data.length){
 
-                res.json("you don't have enough quantity to sell it.");
+                res.json({
+                    message:"you don't have enough quantity to sell it.",
+                    AvailableQuantity:0
+                });
 
             }else if(data[0].Total_quantity>=sell_quantity){
 
@@ -199,14 +210,19 @@ exports.sellStock = function(req,res,next){
                 data.save()
                 .then(doc=>{
                     res.json({
-                        message:"Stock sold Successfully"
+                        message:"Stock sold Successfully",
+                        sell_price:sell_price,
+                        ReleasedAmount:sell_quantity*sell_price
                     });
                  })
                }) 
                
             }else{
 
-                res.json("you don't have enough quantity to sell it.");
+                res.json({
+                    message:"you don't have enough quantity to sell it.",
+                    AvailableQuantity:data[0].Total_quantity
+                });
               
             }   
           })

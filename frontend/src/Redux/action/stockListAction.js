@@ -1,5 +1,5 @@
 
-import {Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
+import {BUY_STOCK,SELL_STOCK,Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,DELETE_Stock,ADD_Stock,FETCH_Stock,Get_Default_Stock} from './stockListType';
 import fire from '../../fire.js';
 const axios = require('axios');
 
@@ -271,6 +271,69 @@ return {
     payload:id,
 }
 }
+
+// to buy stock
+export const buyCurrentStock=(stock_id,user_id,buy_price,total_quantity)=>{
+  return function(dispatch){
+  var OPTIONS = {
+    url: "http://localhost:5000/buy-stock/",
+    method: "POST",
+    data:{stock_id:stock_id,user_Id:user_id,Buy_price:buy_price,Total_quantity:total_quantity},
+    headers: {
+      "content-type": "application/json",
+    },
+  }
+  
+  axios(OPTIONS).then(res=>
+    {
+      const buyStockData = [];
+      buyStockData[0]=res.data.message;
+      buyStockData[1]=res.data.BuyPrice;
+      buyStockData[2]=res.data.totalAmountUsed;
+      buyStockData[3]=res.data.TradableAmount;
+       dispatch(buyStock(buyStockData));
+    }).catch(err=>console.log(err));
+} 
+}
+
+export const buyStock=(buyStockData)=>{
+return {
+  type:BUY_STOCK,
+  payload:buyStockData,
+}
+}
+
+export const sellCurrentStock=(stock_id,user_id,sell_price,total_quantity)=>{
+  return function(dispatch){
+  var OPTIONS = {
+    url: "http://localhost:5000/sell-stock/",
+    method: "POST",
+    data:{stock_id:stock_id,user_Id:user_id,Sell_price:sell_price,Sell_quantity:total_quantity},
+    headers: {
+      "content-type": "application/json",
+    },
+  }
+  
+  axios(OPTIONS).then(res=> {
+    const sellStockData = [];
+    sellStockData[0]=res.data.message;
+    sellStockData[1]=res.data.sell_price;
+    sellStockData[2]=res.data.ReleasedAmount;
+    sellStockData[3]=res.data.AvailableQuantity;
+
+    dispatch(sellStock(sellStockData));
+  }).catch(err=>console.log(err));
+}
+}
+
+export const sellStock=(sellStockData)=>{
+  return {
+    type:SELL_STOCK,
+    payload:sellStockData,
+  }
+  }
+
+// to sell stock
 
 
 // ____________________ users actions ________________

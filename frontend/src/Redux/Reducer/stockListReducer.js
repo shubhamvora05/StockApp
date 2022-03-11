@@ -1,4 +1,4 @@
-import { Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,ADD_Stock,FETCH_Stock,DELETE_Stock,Get_Default_Stock} from '../action/stockListType';
+import {BUY_STOCK,SELL_STOCK,Get_Stock_Data,Add_User,ADD_WatchList,FETCH_WatchList,EDIT_WatchList,UPDATE_WatchList,DELETE_WatchList,ADD_Stock,FETCH_Stock,DELETE_Stock,Get_Default_Stock} from '../action/stockListType';
 const initialState={
     watchList:'',
     allWatchLists:[],
@@ -8,7 +8,9 @@ const initialState={
     Stock:'',
     allStocks:[],
     defaultStocks:[],
-    stockData:[]
+    stockData:[],
+    stockbuyData:[],
+    stocksellData:[]
 }
 
 const stockListReducer=(state=initialState, action)=>{
@@ -65,6 +67,14 @@ const stockListReducer=(state=initialState, action)=>{
             ...state,
             msg:"Stock Deleted Successfully"
           
+        }
+        case BUY_STOCK:return{
+            ...state,
+            stockbuyData:action.payload
+        }
+        case SELL_STOCK:return{
+            ...state,
+            stocksellData:action.payload
         }
         case Add_User:return{
             ...state

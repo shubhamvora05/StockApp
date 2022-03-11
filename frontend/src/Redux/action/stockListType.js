@@ -8,4 +8,6 @@ export const FETCH_Stock = 'FETCH_Stock';
 export const DELETE_Stock = 'DELETE_Stock';
 export const Get_Default_Stock = 'Get_Default_Stock';
 export const Get_Stock_Data = ' Get_Stock_Data'; 
+export const BUY_STOCK = 'BUY_STOCK';
+export const SELL_STOCK = 'SELL_STOCK';
 export const Add_User = 'Add_User';

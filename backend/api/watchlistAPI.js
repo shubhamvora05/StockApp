@@ -39,9 +39,9 @@ router.get("/getAllStocks/:watchListId",stockController.getAllStock);
 router.delete("/delete-Stock/",stockController.deleteStock);
 
 // buy stock
-router.post("/buy-sotck/",stockController.buyStock);
+router.post("/buy-stock/",stockController.buyStock);
 
 // sell stokc
-router.post("/sell-sotck/",stockController.sellStock);
+router.post("/sell-stock/",stockController.sellStock);
 
 module.exports=router;
