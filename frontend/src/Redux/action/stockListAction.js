@@ -175,7 +175,7 @@ export const getStockData = (stockSymbol) =>{
   axios(OPTIONS).then(res=> {
     if(res.data.results.length){
       var OPTIONS = {
-        url: "https://cloud.iexapis.com/stable/stock/"+res.data.results[0].tickerSymbol+"/previous?token=pk_285cb48c447f42ee90eb212c9e6e5a09",
+        url: "https://cloud.iexapis.com/stable/stock/"+res.data.results[0].tickerSymbol+"/previous?token=pk_949aee3bea8c4d1f92fee3b89e3e00f7",
         method: "GET",
         data:{},
         headers: {

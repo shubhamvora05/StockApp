@@ -34,7 +34,9 @@ function ViewStockContainer(props) {
     return (
         <Container>
             <Header/>
+            <Row style={{marginTop:"20px"}}>
             <ChartContainer/>
+            </Row>
             <Row>
                 <h1>stock {id}</h1>
                 {StockData}

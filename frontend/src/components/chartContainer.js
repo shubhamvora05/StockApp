@@ -77,7 +77,7 @@ export default class ChartContainer extends Component {
         selected: 1
       },
       title: {
-        text: `Bitcoin stock price`
+        text: `sample stock price`
       },
       chart: {
         height: 600,

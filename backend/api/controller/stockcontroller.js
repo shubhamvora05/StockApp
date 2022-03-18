@@ -11,7 +11,7 @@ exports.addNewStock=function(req,res,next){
         WatchList_Id:watchList,
         stock_ticker:stockName
       });
-
+    // console.log("yes");
     stockDetails.save()
     .then(doc=>{
         res.status(201).json({
