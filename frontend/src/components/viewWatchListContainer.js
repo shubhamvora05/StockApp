@@ -39,7 +39,7 @@ if(allStocks){
     return (
         
         <div>
-            <h1>all stocks</h1>
+            <h1 style={{margin: '4% 35%'}}>all stocks</h1>
 
             <Table striped bordered hover size="sm">
                 <thead>

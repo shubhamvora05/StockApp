@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react';
 import { useSelector,useDispatch} from 'react-redux';
 import { getUserInformation} from '../Redux/action/stockListAction';
-import { Table,Container,Row,Col,Form,Button } from 'react-bootstrap';
+import { Table,Container,Row,Col,Button } from 'react-bootstrap';
 import { Link} from 'react-router-dom';
 import Header from './Header';
 import fire from '../fire.js';
@@ -50,7 +50,7 @@ function UserProfileContainer(props) {
             </Row>
             <Row>
                 <Col>
-                <h1 style={{margin: '2% 34% '}}>User Profile Details</h1>
+                <h1 style={{margin: '2% 34%'}}>User Profile Details</h1>
                 <Table striped bordered hover size="sm" style={{margin: '2% 28% ',width:'40%', backgroundColor:'lightgrey',height: '200px'}}>
                 
                 <tbody>

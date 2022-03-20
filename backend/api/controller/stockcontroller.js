@@ -98,8 +98,8 @@ exports.buyStock = function(req,res,next){
     
   var stock_Id = req.body.stock_id;
   var user_Id = req.body.user_Id;
-  var Buy_price = req.body.Buy_price;
-  var Total_quantity = req.body.Total_quantity;
+  var Buy_price = parseInt(req.body.Buy_price);
+  var Total_quantity = parseInt(req.body.Total_quantity);
   var AvailableData;
   var previousBuyPrice;
   var previousQuantity;
@@ -121,14 +121,13 @@ exports.buyStock = function(req,res,next){
             if(data.length){
     
             AvailableData = data[0]._id;
-            previousBuyPrice = data[0].Buy_price;
-            previousQuantity = data[0].Total_quantity;
+            previousBuyPrice = parseInt(data[0].Buy_price);
+            previousQuantity = parseInt(data[0].Total_quantity);
     
-            StockOrderModel.findById(AvailableData,function(err,data){
-                data.Total_quantity=Total_quantity ? Total_quantity+previousQuantity : data.Total_quantity;
-                data.Buy_price=Buy_price ? (Total_quantity*Buy_price + previousQuantity*previousBuyPrice)/(previousQuantity + Total_quantity )*2 : data.Buy_price;
-                data.save()
-               
+            StockOrderModel.findById(AvailableData,function(err,dataToUpdate){
+                dataToUpdate.Total_quantity=previousQuantity + Total_quantity;
+                dataToUpdate.Buy_price=(Total_quantity*Buy_price + previousQuantity*previousBuyPrice)/(previousQuantity + Total_quantity );
+                dataToUpdate.save()
             })
             }else{
     
@@ -174,8 +173,8 @@ exports.sellStock = function(req,res,next){
 
     var stock_Id = req.body.stock_id;
     var user_Id = req.body.user_Id;
-    var sell_price = req.body.Sell_price;
-    var sell_quantity = req.body.Sell_quantity;
+    var sell_price = parseInt(req.body.Sell_price);
+    var sell_quantity = parseInt(req.body.Sell_quantity);
     var AvailableData;
     var Total_Quantity;   
   
@@ -198,7 +197,7 @@ exports.sellStock = function(req,res,next){
             }else if(data[0].Total_quantity>=sell_quantity){
 
                 AvailableData = data[0]._id;
-                Total_Quantity = data[0].Total_quantity;
+                Total_Quantity = parseInt(data[0].Total_quantity);
       
                 StockOrderModel.findById(AvailableData,function(err,data){
                   data.Total_quantity=Total_Quantity-sell_quantity;

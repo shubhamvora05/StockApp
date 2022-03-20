@@ -11,9 +11,8 @@ function GetWatchListContainer(props) {
     useEffect(()=>{
         dispatch(fetchWatchList(user_id))
     });
-    const allWatchLists=useSelector(state=>state.allWatchLists);
-    
- 
+    const allWatchLists=useSelector(state=>state.allWatchLists); 
+
 //console.log(userDetails);
 if(allWatchLists){
     
@@ -46,7 +45,7 @@ if(allWatchLists){
     //console.log(allCategories);
     return (
         <div>
-            <h1>All Watchlists </h1>
+            <h1 style={{margin: '4% 25%'}}>Your Watchlists </h1>
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>

@@ -2,14 +2,26 @@ import React,{ useState, useEffect} from 'react'
 import {connect} from 'react-redux';
 import { addStock, fetchSingleWatchList,getDefaultStocks } from '../Redux/action/stockListAction';
 import {useSelector, useDispatch} from 'react-redux';
-import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
+import { Container,Modal,Row,Col,Form ,Button} from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
 import ViewWatchListContainer from './viewWatchListContainer';
 import Header from './Header';
 
 function StockListContainer(props) {
 
-    const [Ticker, setTicker] = useState('');    
+    const [Ticker, setTicker] = useState(''); 
+    const [show, setShow] = useState(false);
+    
+
+    const handleClose = () =>  {
+        setTimeout(() => {
+            setShow(false);
+          }, 10);
+        }
+    const handleShow = () => {
+        setTimeout(() => {
+            setShow(true);
+          }, 1000); }   
     
     let { id } = useParams();
     const dispatch=useDispatch();
@@ -30,9 +42,9 @@ function StockListContainer(props) {
 
     var listNameVar;
    if(currentWatchList.length){
-    listNameVar = <h1>Watchlist Name - {currentWatchList[0].WatchList}</h1>
+    listNameVar = <h1 style={{margin: '4% 10%'}}>Watchlist Name - {currentWatchList[0].WatchList}</h1>
    }else{
-    listNameVar = <h1>Watchlist Name - </h1>
+    listNameVar = <h1 style={{margin: '4% 10%'}}>Watchlist Name - Test </h1>
    }
   
     return (
@@ -43,18 +55,34 @@ function StockListContainer(props) {
       <Col>
        
         {listNameVar}
-        <h2>Add Stocks Here</h2>
+        
     <Form className="form">     
           
-    <p>{props.msg}</p>
+    
     <Form.Group controlId="formCategory">
-      <Form.Label>Enter Ticker Symbol</Form.Label>
-      <select value={props.Ticker} onChange={e=>setTicker(e.target.value)}> 
+      <Form.Label>Choose Ticker Symbol to add in watchList</Form.Label><br/>
+      <select value={props.Ticker} defaultValue="AMZN" style={{width:'150px'}} onChange={e=>setTicker(e.target.value)}> 
       {DefaultStockData}
       </select>  
     </Form.Group>
-    <Button variant="primary" onClick={()=>props.addTicker(id,Ticker)}>ADD</Button>
+    <div style={{padding:'10px 0',display:'inline-block'}}>
+    <Button style={{color:'green',backgroundColor:'lightgrey',borderRadius:'10%',height:'40px',width:'150px'}} variant="primary" onClick={()=>{props.addTicker(id,Ticker);handleShow();}}>ADD</Button></div>
     </Form>
+
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sold Stock Information </Modal.Title>
+        </Modal.Header>
+        <Modal.Body><p>{props.msg}</p>
+                    </Modal.Body>
+        <Modal.Footer>
+          
+          <Button variant="primary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
    </Col>
    <Col>
    <ViewWatchListContainer id = {id} />

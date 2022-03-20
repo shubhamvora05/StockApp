@@ -203,7 +203,7 @@ export const getStockDataFromAPI = (stockData) =>{
 // to add stock in particular watchlists
 
 export const addStock=(watchlist,stock)=>{
-  //console.log(stock);
+  console.log(stock);
   var OPTIONS = {
       url: "http://localhost:5000/add-new-stock",
       method: "POST",
