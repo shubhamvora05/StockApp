@@ -194,7 +194,7 @@ exports.sellStock = function(req,res,next){
                     AvailableQuantity:0
                 });
 
-            }else if(data[0].Total_quantity>=sell_quantity){
+            }else if(data[0].Total_quantity>sell_quantity){
 
                 AvailableData = data[0]._id;
                 Total_Quantity = parseInt(data[0].Total_quantity);
@@ -216,6 +216,23 @@ exports.sellStock = function(req,res,next){
                  })
                }) 
                
+            }else if(data[0].Total_quantity=sell_quantity){
+
+                AvailableData = data[0]._id;
+                Total_Quantity = parseInt(data[0].Total_quantity);
+      
+                StockOrderModel.findByIdAndRemove(AvailableData)
+                .then(doc=>{
+                 res.status(201).json({
+                    message:"Stock sold Successfully",
+                        sell_price:sell_price,
+                        ReleasedAmount:sell_quantity*sell_price
+                 });
+                })
+                .catch(err=>{
+                    res.json(err)
+                })
+
             }else{
 
                 res.json({

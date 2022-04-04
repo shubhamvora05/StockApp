@@ -17,6 +17,7 @@ function ViewStockContainer(props) {
             setShow(false);
           }, 10);
         }
+
     const handleShow = () => {
         setTimeout(() => {
             setShow(true);
@@ -31,6 +32,7 @@ function ViewStockContainer(props) {
             setTimeout(() => {
                 setShowSell(true);
               }, 1000); }
+              
     let { id } = useParams();
     const dispatch=useDispatch();
     useEffect(()=>{
@@ -39,6 +41,8 @@ function ViewStockContainer(props) {
           }, 60000);
      
     });
+
+  
     const stockdata=useSelector(state=>state.stockData);
     var buy_price=100;
     var sell_price=100;
@@ -57,8 +61,8 @@ function ViewStockContainer(props) {
       const [total_quantity, settotal_quantity] =useState(10);
 
     const user_id=fire.auth().currentUser.uid;
-    
 
+    
     return (
         <Container>
             <Header/>
@@ -119,7 +123,7 @@ function ViewStockContainer(props) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sold Stock Information </Modal.Title>
+          <Modal.Title>Bought Stock Information </Modal.Title>
         </Modal.Header>
         <Modal.Body><p>{props.buystockData[0]}</p><p> Buy Price is $ {props.buystockData[1]}</p>
                     <p>Total amount used is ${props.buystockData[2]}</p>
@@ -135,7 +139,7 @@ function ViewStockContainer(props) {
 
       <Modal show={showSell} onHide={handleCloseSell}>
         <Modal.Header closeButton>
-          <Modal.Title>Bought Stock Information </Modal.Title>
+          <Modal.Title>Sold Stock Information </Modal.Title>
         </Modal.Header>
         <Modal.Body><p>{props.sellstockData[0]}</p><p>Sold price is ${props.sellstockData[1]}</p>
                     <p>Total amount Released is ${props.sellstockData[2]}</p>

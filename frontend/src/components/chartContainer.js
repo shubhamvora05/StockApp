@@ -37,6 +37,11 @@ import priceData from '../stockchardata/btcdata.json'
 import moment from 'moment'
 
 export default class ChartContainer extends Component {
+
+  shouldshouldComponentUpdate(nextProps, nextState) {  
+    return false;  
+  }  
+
   render() {
     const options = {style: 'currency', currency: 'USD'};
     const numberFormat = new Intl.NumberFormat('en-US', options);
